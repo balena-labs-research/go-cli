@@ -1,0 +1,59 @@
+package api
+
+import (
+	"encoding/json"
+	"flag"
+	"log"
+	"net/http"
+
+	"github.com/maggie0002/go-cli/pkg/networking"
+)
+
+type errorMessage struct {
+	Message string `json:"error"`
+}
+
+var (
+	port string
+)
+
+func init() {
+	flag.StringVar(&port, "port", "7878", "Specify a port to run the API")
+}
+
+// Returns JSON array with info for each device found on network
+func scan(w http.ResponseWriter, r *http.Request) {
+	devices, err := networking.GetDevices()
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		jsonResp, err := json.Marshal(errorMessage{err.Error()})
+		if err != nil {
+			log.Printf("Error happened in JSON marshal. Err: %s", err)
+			return
+		}
+		_, err = w.Write(jsonResp)
+		if err != nil {
+			log.Printf("Error happened in writing response. Err: %s", err)
+			return
+		}
+	}
+	err = json.NewEncoder(w).Encode(devices)
+
+	if err != nil {
+		log.Printf("Error happened in JSON marshal. Err: %s", err)
+		return
+	}
+}
+
+func Start() {
+	// Routes
+	http.HandleFunc("/v1/scan", scan)
+
+	// Start API server
+	log.Printf("API running on port %s", port)
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		log.Fatalf("Error starting API server. Err: %s", err)
+	}
+}
