@@ -10,12 +10,8 @@ import (
 	"github.com/maggie0002/go-cli/pkg/docker"
 )
 
-var (
-	deviceInfo []types.Info
-)
-
 func GetDevices() ([]types.Info, error) {
-
+	var deviceInfo []types.Info
 	// Arp scan for available devices
 	arpResult, err := ArpScan()
 
@@ -25,7 +21,7 @@ func GetDevices() ([]types.Info, error) {
 
 	// Scan to see if port 22222 is open as indicator of whether it is a balena device
 	var wg sync.WaitGroup
-	for _, ip := range arpResult {
+	for _, ip := range *arpResult {
 		wg.Add(1)
 
 		// Run scans concurrently in goroutines

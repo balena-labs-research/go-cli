@@ -29,8 +29,10 @@ var (
 	arpResults []net.IP
 )
 
-func ArpScan() ([]net.IP, error) {
-	var errored error
+func ArpScan() (*[]net.IP, error) {
+	// Clear cached ARP results
+	arpResults = []net.IP{}
+
 	// Get a list of all interfaces.
 	ifaces, err := net.Interfaces()
 	if err != nil {
@@ -46,8 +48,9 @@ func ArpScan() ([]net.IP, error) {
 			defer wg.Done()
 			// Ignore interfaces that are not ethernet of wifi
 			if iface.Name[0:1] == "e" || iface.Name[0:1] == "w" {
-				if err := scan(&iface); err != nil {
-					errored = err
+				err := scan(&iface)
+				if err != nil {
+					log.Println(err)
 				}
 			}
 		}(iface)
@@ -56,7 +59,7 @@ func ArpScan() ([]net.IP, error) {
 	// forever, but will stop on an error, so if we get past this Wait
 	// it means all attempts to write have failed.
 	wg.Wait()
-	return arpResults, errored
+	return &arpResults, err
 }
 
 // scan scans an individual interface's local network for machines using ARP requests/replies.
