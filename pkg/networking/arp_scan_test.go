@@ -1,14 +1,11 @@
 package networking
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestArpScan(t *testing.T) {
-
-	out, err := ArpScan()
-	fmt.Println(out)
+	_, err := ArpScan()
 
 	if err != nil {
 		t.Error(err)
