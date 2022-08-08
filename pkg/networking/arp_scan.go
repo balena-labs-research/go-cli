@@ -40,6 +40,7 @@ func ArpScan() (*[]net.IP, error) {
 		return nil, err
 	}
 
+	var errored error
 	var wg sync.WaitGroup
 	for _, iface := range ifaces {
 		wg.Add(1)
@@ -51,6 +52,7 @@ func ArpScan() (*[]net.IP, error) {
 				err := scan(&iface)
 				if err != nil {
 					log.Println(err)
+					errored = err
 				}
 			}
 		}(iface)
@@ -59,7 +61,7 @@ func ArpScan() (*[]net.IP, error) {
 	// forever, but will stop on an error, so if we get past this Wait
 	// it means all attempts to write have failed.
 	wg.Wait()
-	return &arpResults, err
+	return &arpResults, errored
 }
 
 // scan scans an individual interface's local network for machines using ARP requests/replies.

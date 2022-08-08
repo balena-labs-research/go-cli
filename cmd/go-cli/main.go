@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	"github.com/maggie0002/go-cli/cmd/go-cli/api"
-	"github.com/maggie0002/go-cli/cmd/go-cli/devices"
+	"github.com/balena-community/go-cli/cmd/go-cli/api"
+	"github.com/balena-community/go-cli/cmd/go-cli/devices"
 )
 
 var (

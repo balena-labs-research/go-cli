@@ -6,16 +6,16 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/maggie0002/go-cli/pkg/networking"
+	"github.com/balena-community/go-cli/pkg/networking"
+)
+
+var (
+	port string
 )
 
 type errorMessage struct {
 	Message string `json:"error"`
 }
-
-var (
-	port string
-)
 
 func init() {
 	flag.StringVar(&port, "port", "7878", "Specify a port to run the API")

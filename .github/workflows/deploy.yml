@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: maggie0002/go-cli
+  IMAGE_NAME: balena-community/go-cli
 
 jobs:
   build:

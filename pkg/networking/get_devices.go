@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/balena-community/go-cli/pkg/docker"
 	"github.com/docker/docker/api/types"
-	"github.com/maggie0002/go-cli/pkg/docker"
 )
 
 func GetDevices() ([]types.Info, error) {

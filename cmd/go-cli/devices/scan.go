@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/maggie0002/go-cli/pkg/networking"
-	"github.com/maggie0002/go-cli/pkg/spinner"
+	"github.com/balena-community/go-cli/pkg/networking"
+	"github.com/balena-community/go-cli/pkg/spinner"
 )
 
 func Scan() {

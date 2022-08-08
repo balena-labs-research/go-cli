@@ -1,4 +1,4 @@
-module github.com/maggie0002/go-cli
+module github.com/balena-community/go-cli
 
 go 1.18
 
