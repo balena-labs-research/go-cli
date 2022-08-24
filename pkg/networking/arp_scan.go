@@ -17,7 +17,6 @@ import (
 	"encoding/binary"
 	"log"
 	"net"
-	"sync"
 	"time"
 
 	"github.com/google/gopacket"
@@ -41,12 +40,9 @@ func ArpScan() (*[]net.IP, error) {
 	}
 
 	var errored error
-	var wg sync.WaitGroup
 	for _, iface := range ifaces {
-		wg.Add(1)
 		// Start up a scan on each interface.
 		go func(iface net.Interface) {
-			defer wg.Done()
 			// Ignore interfaces that are not ethernet of wifi
 			if iface.Name[0:1] == "e" || iface.Name[0:1] == "w" {
 				err := scan(&iface)
@@ -60,7 +56,7 @@ func ArpScan() (*[]net.IP, error) {
 	// Wait for all interfaces' scans to complete.  They'll try to run
 	// forever, but will stop on an error, so if we get past this Wait
 	// it means all attempts to write have failed.
-	wg.Wait()
+	time.Sleep(9 * time.Second)
 	return &arpResults, errored
 }
 
