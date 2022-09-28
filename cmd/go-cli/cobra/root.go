@@ -8,8 +8,8 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "go-cli",
-	Short: "go-cli is a CLI for balenaOS development",
+	Use:   "balena-go",
+	Short: "balena-go is a CLI for balenaOS development",
 	Long:  "This is a community maintained tool providing a series of development related functions for balena devices",
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
@@ -30,7 +30,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go-cli.yaml)")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.balena-go.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

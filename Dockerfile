@@ -20,4 +20,4 @@ RUN apk add --no-cache \
 
 COPY --from=builder /build/dist .
 
-ENTRYPOINT ["./go-cli"]
+ENTRYPOINT ["./balena-go"]
