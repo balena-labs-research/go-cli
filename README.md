@@ -6,7 +6,7 @@ This is an experimental community project that provides some of the basic balena
 
 ## Basic Usage:
 
-Download the file based on your system type from the releases page. `go-cli -help` will show available options.
+Download the file based on your system type from the releases page. `balena-go -help` will show available options.
 
 There are docker containers published in the `Packages` section of the GitHub repo.
 

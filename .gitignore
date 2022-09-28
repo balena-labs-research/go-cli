@@ -9,6 +9,7 @@
 *.dylib
 .vscode
 /go-cli
+/balena-go
 dist
 
 # Test binary, built with `go test -c`
