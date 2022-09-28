@@ -8,8 +8,6 @@ This is an experimental community project that provides some of the basic balena
 
 Download the file based on your system type from the releases page. `go-cli -help` will show available options.
 
-You can start with the `-api` flag which starts an API on port 7878 waiting for requests.
-
 There are docker containers published in the `Packages` section of the GitHub repo.
 
 ## Supported Features:
