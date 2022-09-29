@@ -7,12 +7,11 @@ import (
 
 	"github.com/balena-community/go-cli/pkg/networking"
 	"github.com/balena-community/go-cli/pkg/spinner"
+	"github.com/docker/docker/api/types"
 )
 
 func Scan() {
-	s := spinner.StartNew("Scanning for local balenaOS devices...")
-	deviceInfo, err := networking.GetDevices()
-	s.Stop()
+	deviceInfo, err := StartArpScan()
 
 	if err != nil {
 		log.Printf("interface %v \n", err)
@@ -37,4 +36,11 @@ func Scan() {
 		fmt.Printf("Balena Engine Version: %s \n", info.ServerVersion)
 		fmt.Printf(" \n")
 	}
+}
+
+func StartArpScan() ([]types.Info, error) {
+	s := spinner.StartNew("Scanning for local balenaOS devices...")
+	deviceInfo, err := networking.GetDevices()
+	s.Stop()
+	return deviceInfo, err
 }
