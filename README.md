@@ -15,6 +15,7 @@ There are docker containers published in the `Packages` section of the GitHub re
 Currently the following features are supported both for standalone use and the API:
 
 - Scan the network for balena devices running in development mode
+- Connect to local development devices on the network with SSH
 
 ## Contributing
 
