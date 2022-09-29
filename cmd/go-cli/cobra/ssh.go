@@ -9,11 +9,18 @@ import (
 var (
 	port   string
 	sshCmd = &cobra.Command{
-		Use:   "ssh [device address]",
+		Use:   "ssh [optional: device address]",
 		Short: "Connect to a balenaOS development device via SSH",
-		Args:  cobra.ExactArgs(1),
+		Long: `Connect to a balenaOS development device via SSH.
+		
+Scan for devices and prompt which to connect to
+  $ balena ssh 
+Connect via SSH to the specified device
+  $ balena ssh c938a7a.local
+`,
+		Args: cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			devices.Ssh(args[0], "", port)
+			devices.Ssh(args, "", port)
 		},
 	}
 )

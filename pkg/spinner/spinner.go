@@ -76,6 +76,8 @@ func (sp *Spinner) Stop() {
 		close(sp.runChan)
 		sp.clearLine()
 	})
+	// Add delay to avoid spinner overlap with next line
+	time.Sleep(1 * time.Second)
 }
 
 // spinner animation
