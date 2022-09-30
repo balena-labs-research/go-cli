@@ -3,8 +3,9 @@ package api
 import (
 	"encoding/json"
 	"flag"
-	"log"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/balena-community/go-cli/pkg/networking"
 )
@@ -29,12 +30,12 @@ func scan(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		jsonResp, err := json.Marshal(errorMessage{err.Error()})
 		if err != nil {
-			log.Printf("Error happened in JSON marshal. Err: %s", err)
+			log.Errorf("Error happened in JSON marshal. Err: %s", err)
 			return
 		}
 		_, err = w.Write(jsonResp)
 		if err != nil {
-			log.Printf("Error happened in writing response. Err: %s", err)
+			log.Errorf("Error happened in writing response. Err: %s", err)
 			return
 		}
 	}
@@ -42,7 +43,7 @@ func scan(w http.ResponseWriter, r *http.Request) {
 	err = json.NewEncoder(w).Encode(devices)
 
 	if err != nil {
-		log.Printf("Error happened in JSON marshal. Err: %s", err)
+		log.Errorf("Error happened in JSON marshal. Err: %s", err)
 		return
 	}
 }

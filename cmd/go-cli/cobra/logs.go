@@ -7,9 +7,10 @@ import (
 
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
-	Use:   "logs [optional: device address]",
-	Short: "Stream logs of running containers",
-	Args:  cobra.MaximumNArgs(1),
+	Use:    "logs [optional: device address]",
+	Short:  "Stream logs of running containers",
+	PreRun: toggleDebug,
+	Args:   cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		devices.StreamAllLogs(args)
 	},

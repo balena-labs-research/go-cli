@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"sync"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/balena-community/go-cli/pkg/docker"
 	"github.com/docker/docker/api/types"
@@ -57,7 +58,7 @@ func StreamAllLogs(args []string) {
 					Tail:       "0"})
 
 				if err != nil {
-					log.Println(err)
+					log.Error(err)
 					return
 				}
 

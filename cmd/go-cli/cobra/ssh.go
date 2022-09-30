@@ -18,7 +18,8 @@ Scan for devices and prompt which to connect to
 Connect via SSH to the specified device
   $ balena ssh c938a7a.local
 `,
-		Args: cobra.MaximumNArgs(1),
+		PreRun: toggleDebug,
+		Args:   cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			devices.Ssh(args, "", port)
 		},

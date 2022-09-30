@@ -2,10 +2,11 @@ package networking
 
 import (
 	"context"
-	"log"
 	"net"
 	"sync"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/balena-community/go-cli/pkg/docker"
 	"github.com/docker/docker/api/types"
@@ -32,7 +33,7 @@ func ScanBalenaDevices() ([]types.Info, error) {
 				client := docker.NewClient(ip.String(), "2375")
 
 				if err != nil {
-					log.Println(err)
+					log.Error(err)
 				}
 
 				dClient, err := client.Info(context.Background())

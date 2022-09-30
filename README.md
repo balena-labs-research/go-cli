@@ -16,6 +16,7 @@ Currently the following features are supported both for standalone use and the A
 
 - Scan the network for balena devices running in development mode
 - Connect to local development devices on the network with SSH
+- Stream container logs from devices on your network
 
 ## Contributing
 

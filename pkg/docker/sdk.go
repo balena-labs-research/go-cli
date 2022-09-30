@@ -1,7 +1,7 @@
 package docker
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/docker/docker/client"
 )
