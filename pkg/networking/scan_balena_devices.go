@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"context"
 	"log"
 	"net"
 	"sync"
@@ -10,7 +11,7 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func GetDevices() ([]types.Info, error) {
+func ScanBalenaDevices() ([]types.Info, error) {
 	var deviceInfo []types.Info
 	// Arp scan for available devices
 	arpResult, err := ArpScan()
@@ -28,13 +29,13 @@ func GetDevices() ([]types.Info, error) {
 		go func(ip net.IP) {
 			defer wg.Done()
 			if err := ScanPort(ip.String(), 22222, time.Second*4); err == nil {
-				client, err := docker.NewClient(ip.String(), "2375")
+				client := docker.NewClient(ip.String(), "2375")
 
 				if err != nil {
 					log.Println(err)
 				}
 
-				dClient, err := docker.Info(client)
+				dClient, err := client.Info(context.Background())
 
 				if err != nil {
 					// Device is not accessible via the docker socket. Either not a

@@ -9,7 +9,6 @@ import (
 
 func Ssh(args []string, username string, port string) {
 	var address string
-	var err error
 
 	if port == "" {
 		port = "22222"
@@ -22,20 +21,14 @@ func Ssh(args []string, username string, port string) {
 	if len(args) > 0 {
 		address = args[0]
 	} else {
-		index, deviceInfo, err := selectLocalDevice()
-
-		if err != nil {
-			log.Printf("interface %v \n", err)
-			log.Print("Check you are running as root")
-			os.Exit(1)
-		}
+		index, deviceInfo := selectLocalDevice()
 
 		if len(deviceInfo) == 0 {
 			fmt.Println("No devices found")
 			return
 		}
 
-		address = deviceInfo[index].Name + ".local"
+		address = getLocalDeviceAddress(index, deviceInfo)
 	}
 
 	cmd := exec.Command("ssh", username+"@"+address, "-p", port)
@@ -43,8 +36,8 @@ func Ssh(args []string, username string, port string) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	err = cmd.Run()
+	err := cmd.Run()
 	if err != nil {
-		fmt.Println("error connecting to host")
+		log.Fatal("error connecting to host")
 	}
 }
