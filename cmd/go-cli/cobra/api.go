@@ -7,8 +7,9 @@ import (
 
 // apiCmd represents the api command
 var apiCmd = &cobra.Command{
-	Use:   "api",
-	Short: "Start the API and listen for requests",
+	Use:    "api",
+	Short:  "Start the API and listen for requests",
+	PreRun: toggleDebug,
 	Run: func(cmd *cobra.Command, args []string) {
 		api.Start()
 	},

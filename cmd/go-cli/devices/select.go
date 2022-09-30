@@ -1,7 +1,7 @@
 package devices
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/docker/docker/api/types"

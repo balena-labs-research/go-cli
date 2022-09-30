@@ -88,10 +88,8 @@ func (sp *Spinner) animate() {
 		switch {
 		case sp.Output != nil:
 			fmt.Fprint(sp.Output, out)
-			//fmt.Fprint(sp.Output, "\r"+out)
 		case !sp.NoTty:
 			fmt.Print(out)
-			//fmt.Print("\r" + out)
 		}
 		time.Sleep(sp.FrameRate)
 		sp.clearLine()

@@ -2,9 +2,10 @@ package devices
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func Ssh(args []string, username string, port string) {
@@ -38,6 +39,6 @@ func Ssh(args []string, username string, port string) {
 
 	err := cmd.Run()
 	if err != nil {
-		log.Fatal("error connecting to host")
+		log.Fatal(err)
 	}
 }

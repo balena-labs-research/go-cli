@@ -2,7 +2,8 @@ package devices
 
 import (
 	"fmt"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/balena-community/go-cli/pkg/networking"
 	"github.com/balena-community/go-cli/pkg/spinner"

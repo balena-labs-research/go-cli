@@ -15,9 +15,10 @@ package networking
 import (
 	"bytes"
 	"encoding/binary"
-	"log"
 	"net"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -35,7 +36,7 @@ func ArpScan() (*[]net.IP, error) {
 	// Get a list of all interfaces.
 	ifaces, err := net.Interfaces()
 	if err != nil {
-		log.Println(err)
+		log.Debug(err)
 		return nil, err
 	}
 
@@ -47,7 +48,7 @@ func ArpScan() (*[]net.IP, error) {
 			if iface.Name[0:1] == "e" || iface.Name[0:1] == "w" {
 				err := scan(&iface)
 				if err != nil {
-					log.Println(err)
+					log.Debug(err)
 					errored = err
 				}
 			}
@@ -101,7 +102,7 @@ func scan(iface *net.Interface) error {
 
 	// Write our scan packets out to the handle.
 	if err := writeARP(handle, iface, addr); err != nil {
-		log.Printf("error writing packets on %v: %v", iface.Name, err)
+		log.Debugf("error writing packets on %v: %v", iface.Name, err)
 		return err
 	}
 	// We don't know exactly how long it'll take for packets to be

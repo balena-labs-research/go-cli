@@ -7,8 +7,9 @@ import (
 
 // scanCmd represents the scan command
 var scanCmd = &cobra.Command{
-	Use:   "scan",
-	Short: "Scan for balenaOS development devices on your local network",
+	Use:    "scan",
+	Short:  "Scan for balenaOS development devices on your local network",
+	PreRun: toggleDebug,
 	Run: func(cmd *cobra.Command, args []string) {
 		devices.Scan()
 	},
