@@ -1,20 +1,22 @@
 package devices
 
 import (
+	"log"
+
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/docker/docker/api/types"
 )
 
-func selectLocalDevice() (int, []types.Info, error) {
-	var device int
-	deviceInfo, err := StartArpScan()
+func getLocalDeviceAddress(index int, deviceInfo []types.Info) string {
+	return deviceInfo[index].Name + ".local"
+}
 
-	if err != nil {
-		return device, deviceInfo, err
-	}
+func selectLocalDevice() (int, []types.Info) {
+	var device int
+	deviceInfo := GetBalenaDevices()
 
 	if len(deviceInfo) == 0 {
-		return device, deviceInfo, nil
+		return device, deviceInfo
 	}
 
 	result := make([]string, len(deviceInfo))
@@ -27,11 +29,11 @@ func selectLocalDevice() (int, []types.Info, error) {
 		Options: result,
 	}
 
-	err = survey.AskOne(prompt, &device)
+	err := survey.AskOne(prompt, &device)
 
 	if err != nil {
-		return device, deviceInfo, err
+		log.Fatal(err)
 	}
 
-	return device, deviceInfo, nil
+	return device, deviceInfo
 }

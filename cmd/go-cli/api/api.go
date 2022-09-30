@@ -23,7 +23,7 @@ func init() {
 
 // Returns JSON array with info for each device found on network
 func scan(w http.ResponseWriter, r *http.Request) {
-	devices, err := networking.GetDevices()
+	devices, err := networking.ScanBalenaDevices()
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

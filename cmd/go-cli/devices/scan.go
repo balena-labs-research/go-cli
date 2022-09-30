@@ -3,7 +3,6 @@ package devices
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/balena-community/go-cli/pkg/networking"
 	"github.com/balena-community/go-cli/pkg/spinner"
@@ -11,13 +10,7 @@ import (
 )
 
 func Scan() {
-	deviceInfo, err := StartArpScan()
-
-	if err != nil {
-		log.Printf("interface %v \n", err)
-		log.Print("Check you are running as root")
-		os.Exit(1)
-	}
+	deviceInfo := GetBalenaDevices()
 
 	// If no devices were found, return
 	if len(deviceInfo) == 0 {
@@ -38,9 +31,16 @@ func Scan() {
 	}
 }
 
-func StartArpScan() ([]types.Info, error) {
+func GetBalenaDevices() []types.Info {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
-	deviceInfo, err := networking.GetDevices()
+	deviceInfo, err := networking.ScanBalenaDevices()
+
+	// Stop before error to avoid overlap of messages
 	s.Stop()
-	return deviceInfo, err
+
+	if err != nil {
+		log.Fatal("Check you are running as root")
+	}
+
+	return deviceInfo
 }

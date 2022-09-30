@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// scanCmd represents the scan command
+// sshCmd represents the ssh command
 var (
 	port   string
 	sshCmd = &cobra.Command{
