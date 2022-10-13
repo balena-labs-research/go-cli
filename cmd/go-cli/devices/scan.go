@@ -5,8 +5,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/balena-community/go-cli/pkg/networking"
-	"github.com/balena-community/go-cli/pkg/spinner"
+	"github.com/balena-labs-research/go-cli/pkg/networking"
+	"github.com/balena-labs-research/go-cli/pkg/spinner"
 	"github.com/docker/docker/api/types"
 )
 

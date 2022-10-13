@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: balena-community/balena-go
+  IMAGE_NAME: balena-labs-research/balena-go
 
 jobs:
   build:

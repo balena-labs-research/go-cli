@@ -8,7 +8,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/balena-community/go-cli/pkg/docker"
+	"github.com/balena-labs-research/go-cli/pkg/docker"
 	"github.com/docker/docker/api/types"
 )
 
