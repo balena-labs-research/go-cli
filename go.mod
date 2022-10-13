@@ -1,4 +1,4 @@
-module github.com/balena-community/go-cli
+module github.com/balena-labs-research/go-cli
 
 go 1.18
 

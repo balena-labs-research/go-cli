@@ -1,7 +1,7 @@
 package cobra
 
 import (
-	"github.com/balena-community/go-cli/cmd/go-cli/api"
+	"github.com/balena-labs-research/go-cli/cmd/go-cli/api"
 	"github.com/spf13/cobra"
 )
 

@@ -1,4 +1,4 @@
-<img src="https://github.com/maggie0002/balena-apps-logo/raw/main/logo.png" width="75" />
+<img src="https://raw.githubusercontent.com/balena-labs-research/apps-logo/main/logo.png" width="75" />
 
 # Balena Go CLI
 
