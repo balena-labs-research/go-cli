@@ -176,7 +176,7 @@ jobs:
           uses: actions/download-artifact@v3
 
         - name: Create production changeLog and release
-          uses: "marvinpinto/action-automatic-releases@v1.2.1"
+          uses: "balena-io-experimental/automatic-release-action@stable"
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             prerelease: false
