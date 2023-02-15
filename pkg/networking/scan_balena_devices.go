@@ -12,7 +12,7 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func ScanBalenaDevices() ([]types.Info, error) {
+func ArpScanBalenaDevices() ([]types.Info, error) {
 	var deviceInfo []types.Info
 	// Arp scan for available devices
 	arpResult, err := ArpScan()
