@@ -10,8 +10,24 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func ArpScan() {
-	deviceInfo := GetBalenaDevices()
+func Scan(scanType string, args []string) {
+	var err error
+	deviceInfo := []types.Info{}
+	switch scanType {
+	case "arp":
+		deviceInfo = arpScan()
+	case "lookup":
+		var ipRange string
+
+		if len(args) > 0 {
+			ipRange = args[0]
+		}
+		deviceInfo, err = lookupScan(ipRange)
+
+		if err != nil {
+			log.Print(err)
+		}
+	}
 
 	// If no devices were found, return
 	if len(deviceInfo) == 0 {
@@ -32,16 +48,32 @@ func ArpScan() {
 	}
 }
 
-func GetBalenaDevices() []types.Info {
+func arpScan() []types.Info {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
-	deviceInfo, err := networking.ArpScanBalenaDevices()
 
-	// Stop before error to avoid overlap of messages
-	s.Stop()
+	// Arp scan for available devices
+	arpResults, err := networking.ArpScan()
 
 	if err != nil {
 		log.Fatal("Check you are running as root")
 	}
 
+	deviceInfo := networking.CheckIpPorts(arpResults, 22222)
+
+	// Stop before error to avoid overlap of messages
+	s.Stop()
+
 	return deviceInfo
+}
+
+func lookupScan(ipRange string) ([]types.Info, error) {
+	s := spinner.StartNew("Scanning for local balenaOS devices...")
+	lookupResults := networking.LookupAddresses(ipRange)
+
+	deviceInfo := networking.CheckHostnamePorts(lookupResults, 22222)
+
+	// Stop before error to avoid overlap of messages
+	s.Stop()
+
+	return deviceInfo, nil
 }

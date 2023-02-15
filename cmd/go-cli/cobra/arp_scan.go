@@ -11,7 +11,7 @@ var arpScanCmd = &cobra.Command{
 	Short:  "Perform Arp scan for balenaOS development devices on your local network",
 	PreRun: toggleDebug,
 	Run: func(cmd *cobra.Command, args []string) {
-		devices.ArpScan()
+		devices.Scan("arp", nil)
 	},
 }
 

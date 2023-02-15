@@ -13,7 +13,7 @@ func getLocalDeviceAddress(index int, deviceInfo []types.Info) string {
 
 func selectLocalDevice() (int, []types.Info) {
 	var device int
-	deviceInfo := GetBalenaDevices()
+	deviceInfo := arpScan()
 
 	if len(deviceInfo) == 0 {
 		return device, deviceInfo
