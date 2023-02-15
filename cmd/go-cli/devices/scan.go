@@ -38,7 +38,7 @@ func Scan(scanType string, args []string) {
 	// Print the info for each device
 	for deviceNumber, info := range deviceInfo {
 		fmt.Printf(" - Device %v - \n", deviceNumber+1)
-		fmt.Printf("Hostname: %s.local \n", info.Name)
+		fmt.Printf("Hostname: %s \n", info.Name)
 		fmt.Println("Containers running: ", info.ContainersRunning)
 		fmt.Printf("Kernel Version: %s \n", info.KernelVersion)
 		fmt.Printf("Operating System: %s \n", info.OperatingSystem)
