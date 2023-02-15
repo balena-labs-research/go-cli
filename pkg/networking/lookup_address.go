@@ -35,21 +35,20 @@ func getLocalRange() string {
 	addrs, err := net.InterfaceAddrs()
 
 	// If no interface address available, return the default address
-	if err != nil {
-		return defaultAddr
-	}
-
-	for _, address := range addrs {
-		// check the address type and if it is not a loopback the display it
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil {
-				split := strings.Split(ipnet.IP.String(), ".")
-				return split[0] + "." + split[1] + "." + split[2] + ".0/24"
+	if err == nil {
+		for _, address := range addrs {
+			// check the address type and if it is not a loopback the display it
+			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+				if ipnet.IP.To4() != nil {
+					split := strings.Split(ipnet.IP.String(), ".")
+					return split[0] + "." + split[1] + "." + split[2] + ".0/24"
+				}
 			}
 		}
 	}
 
 	// Return the default address if no address is found
+	log.Print("No interface address found. Using default address: " + defaultAddr)
 	return defaultAddr
 }
 
