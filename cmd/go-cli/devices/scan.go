@@ -10,7 +10,7 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func Scan() {
+func ArpScan() {
 	deviceInfo := GetBalenaDevices()
 
 	// If no devices were found, return
@@ -34,7 +34,7 @@ func Scan() {
 
 func GetBalenaDevices() []types.Info {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
-	deviceInfo, err := networking.ScanBalenaDevices()
+	deviceInfo, err := networking.ArpScanBalenaDevices()
 
 	// Stop before error to avoid overlap of messages
 	s.Stop()
