@@ -11,14 +11,6 @@ import (
 func Ssh(args []string, username string, port string) {
 	var address string
 
-	if port == "" {
-		port = "22222"
-	}
-
-	if username == "" {
-		username = "root"
-	}
-
 	if len(args) > 0 {
 		address = args[0]
 	} else {

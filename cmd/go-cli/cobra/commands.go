@@ -5,6 +5,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	port string
+)
+
 // arpScanCmd represents the arp scan command
 var arpScanCmd = &cobra.Command{
 	Use:    "arpscan",
@@ -39,31 +43,27 @@ var lookupAddressCmd = &cobra.Command{
 }
 
 // sshCmd represents the ssh command
-var (
-	port   string
-	sshCmd = &cobra.Command{
-		Use:   "ssh [optional: device address]",
-		Short: "Connect to a balenaOS development device via SSH",
-		Long: `Connect to a balenaOS development device via SSH.
+var sshCmd = &cobra.Command{
+	Use:   "ssh [optional: device address]",
+	Short: "Connect to a balenaOS development device via SSH",
+	Long: `Connect to a balenaOS development device via SSH.
 		
 Scan for devices and prompt which to connect to
-  $ balena ssh 
+  $ balena ssh
 Connect via SSH to the specified device
   $ balena ssh c938a7a.local
 `,
-		PreRun: toggleDebug,
-		Args:   cobra.MaximumNArgs(1),
-		Run: func(cmd *cobra.Command, args []string) {
-			devices.Ssh(args, "", port)
-		},
-	}
-)
+	PreRun: toggleDebug,
+	Args:   cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		devices.Ssh(args, "root", port)
+	},
+}
 
 func init() {
 	rootCmd.AddCommand(arpScanCmd)
 	rootCmd.AddCommand(logsCmd)
 	rootCmd.AddCommand(lookupAddressCmd)
 	rootCmd.AddCommand(sshCmd)
-
-	sshCmd.Flags().StringVarP(&port, "port", "p", "", "Specify ssh port. Default is 22222")
+	sshCmd.Flags().StringVarP(&port, "port", "p", "22222", "Specify ssh port. Default is 22222")
 }
