@@ -1,17 +1,17 @@
 package devices
 
 import (
+	"github.com/balena-labs-research/go-cli/pkg/networking"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/docker/docker/api/types"
 )
 
-func getLocalDeviceAddress(index int, deviceInfo []types.Info) string {
-	return deviceInfo[index].Name + ".local"
+func getLocalDeviceAddress(index int, deviceInfo []networking.DockerResponse) string {
+	return deviceInfo[index].Address
 }
 
-func selectLocalDevice() (int, []types.Info) {
+func selectLocalDevice() (int, []networking.DockerResponse) {
 	var device int
 	deviceInfo := arpScan()
 
@@ -21,7 +21,7 @@ func selectLocalDevice() (int, []types.Info) {
 
 	result := make([]string, len(deviceInfo))
 	for i, item := range deviceInfo {
-		result[i] = item.Name
+		result[i] = item.Info.Name
 	}
 
 	prompt := &survey.Select{
