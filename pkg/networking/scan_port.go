@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func ScanPort(ip string, port int, timeout time.Duration) error {
+func DialPort(ip string, port int, timeout time.Duration) error {
 	target := fmt.Sprintf("%s:%d", ip, port)
 	conn, err := net.DialTimeout("tcp", target, timeout)
 

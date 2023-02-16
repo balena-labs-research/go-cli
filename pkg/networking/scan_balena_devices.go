@@ -23,7 +23,7 @@ func CheckIpPorts(ips *[]net.IP, port int) []types.Info {
 		// Run scans concurrently in goroutines
 		go func(ip net.IP) {
 			defer wg.Done()
-			if err := ScanPort(ip.String(), port, time.Second*4); err == nil {
+			if err := DialPort(ip.String(), port, time.Second*4); err == nil {
 				client, err := docker.NewClient(ip.String(), "2375")
 
 				if err != nil {
@@ -61,7 +61,7 @@ func CheckHostnamePorts(hostnames []string, port int) []types.Info {
 
 			localHostname := hostname
 
-			if err := ScanPort(localHostname, port, time.Second*4); err == nil {
+			if err := DialPort(localHostname, port, time.Second*4); err == nil {
 				client, err := docker.NewClient(localHostname, "2375")
 
 				if err != nil {
