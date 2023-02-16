@@ -55,7 +55,7 @@ func arpScan() []types.Info {
 	arpResults, err := networking.ArpScan()
 
 	if err != nil {
-		log.Fatal("Check you are running as root")
+		log.Fatal(err)
 	}
 
 	deviceInfo := networking.CheckIpPorts(arpResults, 22222)
