@@ -92,7 +92,7 @@ func LookupAddresses(ipRange string) ([]string, error) {
 func lookupIP(ip string, ch chan string, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	const timeout = 1000 * time.Millisecond
+	const timeout = 3000 * time.Millisecond
 
 	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
 	defer cancel() // Important to avoid a resource leak
