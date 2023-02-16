@@ -10,10 +10,10 @@ import (
 	"time"
 )
 
-func createHostRange(netw string) []string {
+func createHostRange(netw string) ([]string, error) {
 	_, ipv4Net, err := net.ParseCIDR(netw)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	mask := binary.BigEndian.Uint32(ipv4Net.Mask)
@@ -27,7 +27,7 @@ func createHostRange(netw string) []string {
 		hosts = append(hosts, ip.String())
 	}
 
-	return hosts
+	return hosts, err
 }
 
 func getLocalRange() string {
@@ -37,7 +37,7 @@ func getLocalRange() string {
 	// If no interface address available, return the default address
 	if err == nil {
 		for _, address := range addrs {
-			// check the address type and if it is not a loopback the display it
+			// check the address type and if it is not a loopback then display it
 			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 				if ipnet.IP.To4() != nil {
 					split := strings.Split(ipnet.IP.String(), ".")
@@ -52,9 +52,7 @@ func getLocalRange() string {
 	return defaultAddr
 }
 
-// ScanRange scans every address on a CIDR for open ports
-func LookupAddresses(ipRange string) []string {
-
+func LookupAddresses(ipRange string) ([]string, error) {
 	var localRange string
 
 	if ipRange != "" {
@@ -63,7 +61,11 @@ func LookupAddresses(ipRange string) []string {
 		localRange = getLocalRange()
 	}
 
-	hostRange := createHostRange(localRange)
+	hostRange, err := createHostRange(localRange)
+
+	if err != nil {
+		return nil, err
+	}
 
 	var wg sync.WaitGroup
 	var results []string
@@ -84,7 +86,7 @@ func LookupAddresses(ipRange string) []string {
 	wg.Wait()
 	close(ch)
 
-	return results
+	return results, err
 }
 
 func lookupIP(ip string, ch chan string, wg *sync.WaitGroup) {
@@ -93,7 +95,7 @@ func lookupIP(ip string, ch chan string, wg *sync.WaitGroup) {
 	const timeout = 1000 * time.Millisecond
 
 	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
-	defer cancel() // important to avoid a resource leak
+	defer cancel() // Important to avoid a resource leak
 
 	var r net.Resolver
 	names, err := r.LookupAddr(ctx, ip)
