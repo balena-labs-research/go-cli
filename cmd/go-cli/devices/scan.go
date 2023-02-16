@@ -68,7 +68,11 @@ func arpScan() []types.Info {
 
 func lookupScan(ipRange string) ([]types.Info, error) {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
-	lookupResults := networking.LookupAddresses(ipRange)
+	lookupResults, err := networking.LookupAddresses(ipRange)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	deviceInfo := networking.CheckHostnamePorts(lookupResults, 22222)
 

@@ -24,10 +24,10 @@ func CheckIpPorts(ips *[]net.IP, port int) []types.Info {
 		go func(ip net.IP) {
 			defer wg.Done()
 			if err := ScanPort(ip.String(), port, time.Second*4); err == nil {
-				client := docker.NewClient(ip.String(), "2375")
+				client, err := docker.NewClient(ip.String(), "2375")
 
 				if err != nil {
-					log.Error(err)
+					log.Fatal(err)
 				}
 
 				dClient, err := client.Info(context.Background())
@@ -62,10 +62,10 @@ func CheckHostnamePorts(hostnames []string, port int) []types.Info {
 			localHostname := hostname
 
 			if err := ScanPort(localHostname, port, time.Second*4); err == nil {
-				client := docker.NewClient(localHostname, "2375")
+				client, err := docker.NewClient(localHostname, "2375")
 
 				if err != nil {
-					log.Error(err)
+					log.Fatal(err)
 				}
 
 				dClient, err := client.Info(context.Background())

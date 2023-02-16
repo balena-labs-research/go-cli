@@ -1,20 +1,18 @@
 package docker
 
 import (
-	log "github.com/sirupsen/logrus"
-
 	"github.com/docker/docker/client"
 )
 
 // Create a new connection to the Docker daemon.
-func NewClient(ip string, port string) *client.Client {
+func NewClient(ip string, port string) (*client.Client, error) {
 
 	tcpAddress := "tcp://" + ip + ":" + port
 	cli, err := client.NewClientWithOpts(client.WithHost(tcpAddress), client.WithAPIVersionNegotiation())
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return cli
+	return cli, err
 }
