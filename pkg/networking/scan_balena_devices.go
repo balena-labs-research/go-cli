@@ -12,8 +12,13 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func CheckIpPorts(ips *[]net.IP, port int) []types.Info {
-	var deviceInfo []types.Info
+type DockerResponse struct {
+	Info    types.Info `json:"info"`
+	Address string     `json:"address"`
+}
+
+func CheckIpPorts(ips *[]net.IP, port int) []DockerResponse {
+	var deviceInfo []DockerResponse
 
 	// Scan to see if port is open as indicator of whether it is a balena device
 	var wg sync.WaitGroup
@@ -37,8 +42,8 @@ func CheckIpPorts(ips *[]net.IP, port int) []types.Info {
 					// balena device, or is running in production more. Skipping.
 					return
 				}
+				deviceInfo = append(deviceInfo, DockerResponse{Info: dClient, Address: ip.String()})
 
-				deviceInfo = append(deviceInfo, dClient)
 			}
 		}(ip)
 	}
@@ -47,8 +52,8 @@ func CheckIpPorts(ips *[]net.IP, port int) []types.Info {
 	return deviceInfo
 }
 
-func CheckHostnamePorts(hostnames []string, port int) []types.Info {
-	var deviceInfo []types.Info
+func CheckHostnamePorts(hostnames []string, port int) []DockerResponse {
+	var deviceInfo []DockerResponse
 
 	// Scan to see if port is open as indicator of whether it is a balena device
 	var wg sync.WaitGroup
@@ -76,7 +81,8 @@ func CheckHostnamePorts(hostnames []string, port int) []types.Info {
 					return
 				}
 
-				deviceInfo = append(deviceInfo, dClient)
+				deviceInfo = append(deviceInfo, DockerResponse{Info: dClient, Address: localHostname})
+
 			}
 		}(hostname)
 	}

@@ -7,12 +7,11 @@ import (
 
 	"github.com/balena-labs-research/go-cli/pkg/networking"
 	"github.com/balena-labs-research/go-cli/pkg/spinner"
-	"github.com/docker/docker/api/types"
 )
 
 func Scan(scanType string, args []string) {
 	var err error
-	deviceInfo := []types.Info{}
+	var deviceInfo []networking.DockerResponse
 	switch scanType {
 	case "arp":
 		deviceInfo = arpScan()
@@ -36,19 +35,20 @@ func Scan(scanType string, args []string) {
 	}
 
 	// Print the info for each device
-	for deviceNumber, info := range deviceInfo {
+	for deviceNumber, item := range deviceInfo {
 		fmt.Printf(" - Device %v - \n", deviceNumber+1)
-		fmt.Printf("Hostname: %s \n", info.Name)
-		fmt.Println("Containers running: ", info.ContainersRunning)
-		fmt.Printf("Kernel Version: %s \n", info.KernelVersion)
-		fmt.Printf("Operating System: %s \n", info.OperatingSystem)
-		fmt.Printf("Architecture: %s \n", info.Architecture)
-		fmt.Printf("Balena Engine Version: %s \n", info.ServerVersion)
+		fmt.Printf("Address: %s \n", item.Address)
+		fmt.Printf("Hostname: %s \n", item.Info.Name)
+		fmt.Println("Containers running: ", item.Info.ContainersRunning)
+		fmt.Printf("Kernel Version: %s \n", item.Info.KernelVersion)
+		fmt.Printf("Operating System: %s \n", item.Info.OperatingSystem)
+		fmt.Printf("Architecture: %s \n", item.Info.Architecture)
+		fmt.Printf("Balena Engine Version: %s \n", item.Info.ServerVersion)
 		fmt.Printf(" \n")
 	}
 }
 
-func arpScan() []types.Info {
+func arpScan() []networking.DockerResponse {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
 
 	// Arp scan for available devices
@@ -66,7 +66,7 @@ func arpScan() []types.Info {
 	return deviceInfo
 }
 
-func lookupScan(ipRange string) ([]types.Info, error) {
+func lookupScan(ipRange string) ([]networking.DockerResponse, error) {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
 	lookupResults, err := networking.LookupAddresses(ipRange)
 
