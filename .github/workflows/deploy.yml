@@ -25,27 +25,27 @@ jobs:
         include:
           - job_name: linux
             os: ubuntu-latest
-            go: '1.19.x'
+            go: '1.19.6'
             filename: balena_go_linux_x86_64
 
           - job_name: linux_386
             os: ubuntu-latest
-            go: '1.19.x'
+            go: '1.19.6'
             filename: balena_go_linux_386
 
           - job_name: mac_amd64
             os: macos-latest
-            go: '1.19.x'
+            go: '1.19.6'
             filename: balena_go_mac_amd64
 
           - job_name: mac_arm64
             os: macos-latest
-            go: '1.19.x'
+            go: '1.19.6'
             filename: balena_go_mac_arm64
 
           - job_name: windows
             os: windows-latest
-            go: '1.19.x'
+            go: '1.19.6'
             filename: balena_go_windows
 
     name: ${{ matrix.job_name }}
@@ -62,13 +62,13 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go }}
-          check-latest: true
+          check-latest: false
 
       - name: Install Libraries on Linux
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: | # Install required packages for Arpscan building
-          sudo apt-get install libpcap-dev
+          sudo apt-get install libpcap-dev -y
 
       - name: Install Libraries on macOS
         if: matrix.os == 'macos-latest'
@@ -90,17 +90,24 @@ jobs:
           go env
           echo "Note: env variables passed in Makefiles override these env vars."
 
-      - name: Run tests on windows
+      - name: Run tests for windows
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
           make test
 
-      - name: Run tests for non-windows platforms
-        if: matrix.os != 'windows-latest'
+      - name: Run tests for macos
+        if: matrix.os == 'macos-latest'
         shell: bash
         run: |
           sudo make test
+
+      - name: Run tests for ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          export GO_SETUP_PATH=$(which go)
+          sudo CGO_ENABLED=1 "$GO_SETUP_PATH" test -ldflags '-w -s' ./...
 
       - name: Build
         shell: bash
