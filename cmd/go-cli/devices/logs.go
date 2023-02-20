@@ -30,11 +30,12 @@ func StreamAllLogs(args []string) {
 		address = getLocalDeviceAddress(index, deviceInfo)
 	}
 
-	client, err := docker.NewClient(address, "2375")
-
+	client, err := docker.NewClient(address)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	defer client.Close()
 
 	containers, err := client.ContainerList(context.Background(), types.ContainerListOptions{})
 

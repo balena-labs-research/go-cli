@@ -29,11 +29,12 @@ func CheckIpPorts(ips *[]net.IP, port int) []DockerResponse {
 		go func(ip net.IP) {
 			defer wg.Done()
 			if err := DialPort(ip.String(), port, time.Second*4); err == nil {
-				client, err := docker.NewClient(ip.String(), "2375")
-
+				client, err := docker.NewClient(ip.String())
 				if err != nil {
 					log.Fatal(err)
 				}
+
+				defer client.Close()
 
 				dClient, err := client.Info(context.Background())
 
@@ -67,11 +68,12 @@ func CheckHostnamePorts(hostnames []string, port int) []DockerResponse {
 			localHostname := hostname
 
 			if err := DialPort(localHostname, port, time.Second*4); err == nil {
-				client, err := docker.NewClient(localHostname, "2375")
-
+				client, err := docker.NewClient(localHostname)
 				if err != nil {
 					log.Fatal(err)
 				}
+
+				defer client.Close()
 
 				dClient, err := client.Info(context.Background())
 
