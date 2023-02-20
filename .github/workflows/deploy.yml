@@ -114,6 +114,7 @@ jobs:
         run: |
           make dist
           mkdir releases
+          cp mutagen-agents.tar.gz ./dist/
           tar -czf releases/${{ matrix.filename }}.tar.gz ./dist/*
 
       - name: Upload file
