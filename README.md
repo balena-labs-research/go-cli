@@ -10,6 +10,10 @@ Download the file based on your system type from the releases page. `balena-go -
 
 There are docker containers published in the `Packages` section of the GitHub repo.
 
+## Mutagen
+
+Mutagen is integrated in to this CLI to allow mounting the contents of a container to the local file system. For the service to work, `mutagen-agents.tar.gz` needs to be present alongside the `balena-go` executable as it contains the agents to be deployed in to the running container.
+
 ## Contributing
 
 Contributions are welcome to help grow the number of features. It may be wise to create an issue or discussion topic before starting to help us all coordinate.
