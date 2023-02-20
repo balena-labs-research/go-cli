@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	port string
+	containers bool
+	port       string
 )
 
 // arpScanCmd represents the arp scan command
@@ -18,7 +19,7 @@ var arpScanCmd = &cobra.Command{
 	Short:  "Perform Arp scan for balenaOS development devices on your local network",
 	PreRun: toggleDebug,
 	Run: func(cmd *cobra.Command, args []string) {
-		devices.Scan("arp", nil)
+		devices.Scan("arp", args, containers)
 	},
 }
 
@@ -41,7 +42,7 @@ var lookupAddressCmd = &cobra.Command{
 	PreRun: toggleDebug,
 	Args:   cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		devices.Scan("lookup", args)
+		devices.Scan("lookup", args, containers)
 	},
 }
 
@@ -123,11 +124,17 @@ Connect via SSH to the specified device
 
 func init() {
 	rootCmd.AddCommand(arpScanCmd)
+	arpScanCmd.Flags().BoolVarP(&containers, "containers", "c", false, "Print a list of containers available on the device")
+
 	rootCmd.AddCommand(logsCmd)
 	rootCmd.AddCommand(lookupAddressCmd)
+
+	lookupAddressCmd.Flags().BoolVarP(&containers, "containers", "c", false, "Print a list of containers available on the device")
 	rootCmd.AddCommand(sshCmd)
+
 	sshCmd.Flags().StringVarP(&port, "port", "p", "22222", "Specify ssh port. Default is 22222")
 	rootCmd.AddCommand(mount)
+
 	mount.AddCommand(mutagenCreate)
 	mount.AddCommand(mutagenList)
 	mount.AddCommand(mutagenRun)
