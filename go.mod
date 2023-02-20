@@ -7,6 +7,7 @@ require (
 	github.com/google/gopacket v1.1.19
 	github.com/spf13/cobra v1.5.0
 	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b
+	golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb
 )
 
 require (
@@ -60,4 +61,4 @@ require (
 	gotest.tools/v3 v3.3.0 // indirect
 )
 
-replace github.com/mutagen-io/mutagen => github.com/maggie0002/mutagen v0.16.6-0.20230217194235-73964f0841c4
+replace github.com/mutagen-io/mutagen => github.com/maggie0002/mutagen v0.16.6-0.20230220105012-a35ea1e7309e
