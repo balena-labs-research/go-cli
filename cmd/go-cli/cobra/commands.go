@@ -52,7 +52,7 @@ var mount = &cobra.Command{
 }
 
 var mutagenCreate = &cobra.Command{
-	Use:          "create <container_name> <container_path> <local_path> <host_address>",
+	Use:          "create <host_address> <container_name> <container_dir_path> <local_dir_path>",
 	Short:        "Create a new synchronised mount session with a balena container",
 	PreRun:       toggleDebug,
 	RunE:         sync.CreateMain,
