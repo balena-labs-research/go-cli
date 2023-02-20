@@ -60,4 +60,4 @@ require (
 	gotest.tools/v3 v3.3.0 // indirect
 )
 
-replace github.com/mutagen-io/mutagen => github.com/maggie0002/mutagen v0.16.6-0.20230220105012-a35ea1e7309e
+replace github.com/mutagen-io/mutagen => github.com/balena-labs-research/mutagen v0.16.6-0.20230220105012-a35ea1e7309e
