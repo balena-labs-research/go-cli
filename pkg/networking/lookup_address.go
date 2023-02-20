@@ -56,7 +56,7 @@ func LookupAddresses(ipRange string) ([]string, error) {
 	var localRange string
 
 	if ipRange != "" {
-		localRange = ipRange
+		localRange = ipRange + "/24"
 	} else {
 		localRange = getLocalRange()
 	}
