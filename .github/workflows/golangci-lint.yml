@@ -21,6 +21,13 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
       - uses: actions/checkout@v3
+
+      - name: Install Libraries on Linux
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: | # Install required packages for Arpscan building
+          sudo apt-get install libpcap-dev
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
