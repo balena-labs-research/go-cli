@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 const (
@@ -36,7 +36,7 @@ func main(title string) *Spinner {
 		FrameRate: DEFAULT_FRAME_RATE,
 		runChan:   make(chan struct{}),
 	}
-	if !terminal.IsTerminal(int(syscall.Stdout)) {
+	if !term.IsTerminal(int(syscall.Stdout)) {
 		sp.NoTty = true
 	}
 	return sp
