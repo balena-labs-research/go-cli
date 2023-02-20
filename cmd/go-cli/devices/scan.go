@@ -13,7 +13,6 @@ import (
 )
 
 func Scan(scanType string, args []string, listContainers bool) {
-	var err error
 	var deviceInfo []networking.DockerResponse
 	switch scanType {
 	case "arp":
@@ -24,11 +23,7 @@ func Scan(scanType string, args []string, listContainers bool) {
 		if len(args) > 0 {
 			ipRange = args[0]
 		}
-		deviceInfo, err = lookupScan(ipRange)
-
-		if err != nil {
-			log.Print(err)
-		}
+		deviceInfo = lookupScan(ipRange)
 	}
 
 	// If no devices were found, return
@@ -88,7 +83,7 @@ func arpScan() []networking.DockerResponse {
 	return deviceInfo
 }
 
-func lookupScan(ipRange string) ([]networking.DockerResponse, error) {
+func lookupScan(ipRange string) []networking.DockerResponse {
 	s := spinner.StartNew("Scanning for local balenaOS devices...")
 	lookupResults, err := networking.LookupAddresses(ipRange)
 
@@ -101,5 +96,5 @@ func lookupScan(ipRange string) ([]networking.DockerResponse, error) {
 	// Stop before error to avoid overlap of messages
 	s.Stop()
 
-	return deviceInfo, nil
+	return deviceInfo
 }

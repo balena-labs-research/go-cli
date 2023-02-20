@@ -13,7 +13,7 @@ func getLocalDeviceAddress(index int, deviceInfo []networking.DockerResponse) st
 
 func selectLocalDevice() (int, []networking.DockerResponse) {
 	var device int
-	deviceInfo := arpScan()
+	deviceInfo := lookupScan("")
 
 	if len(deviceInfo) == 0 {
 		return device, deviceInfo
