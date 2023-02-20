@@ -6,7 +6,7 @@ build:
 	${ENVIRONMENT} go build -o ${BINARY_NAME} -ldflags '${LDFLAGS}' ./
 
 test:
-	${ENVIRONMENT} go test -ldflags '${LDFLAGS}'  ./...
+	${ENVIRONMENT} go test -ldflags '${LDFLAGS}' ./...
 
 dist:
 	${ENVIRONMENT} go build -o dist/${BINARY_NAME} -ldflags '${LDFLAGS}' ./
