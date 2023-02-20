@@ -6,8 +6,8 @@ require (
 	github.com/docker/docker v20.10.17+incompatible
 	github.com/google/gopacket v1.1.19
 	github.com/spf13/cobra v1.5.0
-	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b
 	golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb
+	golang.org/x/term v0.5.0
 )
 
 require (
@@ -28,7 +28,6 @@ require (
 	github.com/mutagen-io/extstat v0.0.0-20210224131814-32fa3f057fa8 // indirect
 	github.com/mutagen-io/fsevents v0.0.0-20180903111129-10556809b434 // indirect
 	github.com/mutagen-io/gopass v0.0.0-20230214181532-d4b7cdfe054c // indirect
-	golang.org/x/term v0.5.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20230119192704-9d59e20e5cd1 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
